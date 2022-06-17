@@ -1,42 +1,22 @@
-set nocompatible              " be iMproved, required
-filetype off                  " required
+set nocompatible
+filetype off
 
-" set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
-
-" let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'https://github.com/dense-analysis/ale.git'
 Plugin 'kkoomen/vim-doge'
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
-" To ignore plugin indent changes, instead use:
-"filetype plugin on
-"
-" Brief help
+call vundle#end()
+filetype plugin indent on
 " :PluginList       - lists configured plugins
 " :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
 " :PluginSearch foo - searches for foo; append `!` to refresh local cache
 " :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
-" All system-wide defaults are set in $VIMRUNTIME/debian.vim and sourced by
-" the call to :runtime you can find below.  If you wish to change any of those
-" settings, you should do it in this file (/etc/vim/vimrc), since debian.vim
-" will be overwritten everytime an upgrade of the vim packages is performed.
-" It is recommended to make changes after sourcing debian.vim since it alters
-" the value of the 'compatible' option.
-" Doge
 
 " Custom set
 set encoding=utf-8
 syntax enable
-autocmd FileType python setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab textwidth=79
+autocmd FileType python setlocal tabstop=4 shiftwidth=4 softtabstop=4 expandtab textwidth=79
 autocmd FileType javascript setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab textwidth=79
 autocmd BufNewFile,BufRead *.c,*.cpp,*.h,*.hpp setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab textwidth=79
 
@@ -45,11 +25,18 @@ let g:doge_doc_standard_python = 'sphinx' " default='reST'
 let g:doge_doc_standard_c = 'doxygen_javadoc' " default='doxygen_javadoc'
 let g:doge_doc_standard_cpp = 'doxygen_javadoc' " default='doxygen_javadoc'
 
-let g:ale_linters = { 'cpp' : ['cc'], 'c' : ['cc'], 'h' : ['cc'], 'hpp' : ['cc'], 'cc' : ['cc'] }
-let g:ale_fixers = { 'cpp' : ['astyle'], 'c' : ['astyle'], 'h' : ['astyle'], 'hpp' : ['astyle'], 'cc' : ['astyle'] }
+let g:ale_linters = { 'cpp' : ['cc'], 'c' : ['cc'], 'h' : ['cc'], 'hpp' : ['cc'], 'cc' : ['cc'], 'javascript' : ['eslint'], 'python' : ['flake8'] }
+let g:ale_fixers = { 'javascript' : ['prettier'], 'python' : ['autopep8'] }
+
 let g:ale_c_cc_options='-Wall -std=gnu89 -Wmissing-braces -Wmaybe-uninitialized -Wwrite-strings -Wformat -Wformat-nonliteral -Wformat-security -Winit-self -Waddress -Wno-multichar -Wvla -Wpointer-arith -Wmissing-declarations -Wmissing-include-dirs -Wmissing-prototypes -Wnested-externs -Waggregate-return -Wold-style-definition -Wdeclaration-after-statement'
 let g:ale_cpp_cc_options='-Wall -std=c++14 -Wmissing-braces -Wmaybe-uninitialized -Wwrite-strings -Wformat -Wformat-nonliteral -Wformat-security -Winit-self -Waddress -Wno-multichar -Wvla -Wpointer-arith'
-let g:ale_fix_on_text_changed=1
+let g:ale_python_flake8_options='--max-complexity 10 --max-line-length 79'
+
+let g:ale_javascript_prettier_options='--single-quote --trailing-comma all --use-tabs false --tab-width 2 --print-width 80 --arrow-parens avoid --end-of-line lf'
+let g:ale_python_autopep8_options='--aggressive 0 --max-line-length 79'
+
 let g:ale_lint_on_text_changed=1
 let g:ale_lint_on_insert_leave=1
 let g:ale_lint_on_save=1
+let g:ale_fix_on_text_changed=1
+let g:ale_fix_on_save=1
